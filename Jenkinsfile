@@ -3,7 +3,6 @@ pipeline {
     stages {
         stage ('Clone') {
             steps {
-                sh 'rm -rf $WORKSPACE/spring-petclinic*'
                 sh 'git clone https://github.com/spring-projects/spring-petclinic.git'
             }
         }
@@ -51,6 +50,20 @@ EOF'''
                          ]
                     }'''
                 )
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+            dir("${env.WORKSPACE}@tmp") {
+                deleteDir()
+            }
+            dir("${env.WORKSPACE}@script") {
+                deleteDir()
+            }
+            dir("${env.WORKSPACE}@script@tmp") {
+                deleteDir()
             }
         }
     }
