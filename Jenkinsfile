@@ -39,6 +39,11 @@ EOF'''
                     }
                 }
                 sh 'docker save udid/spring-petclinic > spring-petclinic.tar'
+            }
+        }
+
+        stage ('Deploy') {
+            steps {
                 rtUpload (
                     serverId: 'udid_artifactory',
                     spec: '''{
