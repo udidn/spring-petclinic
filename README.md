@@ -85,10 +85,10 @@ RUN jenkins-plugin-cli --plugins "blueocean:1.25.2 docker-workflow:1.26"
 
 Notes:
 
-1. As part of step 4 above, I ran into an issue using Docker (to build the Docker image) inside the Jenkins Docker container (issue accessing Docker API).
+1. As part of step 3.iv above, I ran into an issue using Docker (to build the Docker image) inside the Jenkins Docker container (issue accessing Docker API).
 Eventually, I decided to remove the Jenkins container and install Jenkins locally on my WSL2 Ubuntu 20.04.
 
-2. Also as part of step 4 above, I wanted to try and push the JAR to the GitHub repository.
+2. Also as part of step 3.iv above, I wanted to try and push the JAR to the GitHub repository.
 I understand that it's not a text file and therefore, can't be version-controlled, but I wanted to provide additional way for the users to pull run the project (by cloning the repository, building Docker image from the Dockerfile - which includes copying the JAR - and launching a container).
 I ran into multiple issues, among them:
 
@@ -105,7 +105,7 @@ I only had to install the Artifactory Jenkins plugin and configure it.
 5. Throughout writing the declarative pipeline, at some point, I pushed the Jenkinsfile to GitHub, switched the "Definition" from "Pipline script" to "Pipeline script from SCM", and verified I can run a build.
 When I had to modify the Jenkinsfile, I switched the "Definition" back to "Pipeline script", rewrote, test running a build, then updated the GitHub repository and swiched back the "Definition" to "Pipeline script from SCM".
 
-6. As part of step 5 above, when I first experimented with the Maven part of the Jenkins Artifactory pipeline plugin, I used both "rtMavenResolver" and "rtMavenDeployer", and referenced them in "rtMavenRun".
+6. As part of step 3.v above, when I first experimented with the Maven part of the Jenkins Artifactory pipeline plugin, I used both "rtMavenResolver" and "rtMavenDeployer", and referenced them in "rtMavenRun".
 The build failed, and as part of observing the console logs, I saw that Maven tries resolving the dependencies in pom.xml, from JFrog Artifactory.
 That's when I realized that "rtMavenResolver" is used to instruct Maven to resolve all dependencies in pom.xml, from JFrog Artifactory, and since they're not there, it fails.
 I removed "rtMavenResolver" (and its reference in "rtMavenRun"), and the build succeeded.
