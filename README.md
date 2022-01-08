@@ -101,9 +101,9 @@ When I had to modify the Jenkinsfile, I switched the "Definition" back to "Pipel
 1. Pushed the Spring PetClinic Dockerfile to GitHub
 2. Verified that I can run the project in the following as if I was a user, in the following 2 ways:
 
-    1. Cloned the GitHub repository using Git client that isn't authenticated with my GitHub repository, then built a Docker image using the Dockerfile, launched a container, and verified that I can successfully access Spring PetClinic over "http://localhost:<port>"
+    1. Cloned the GitHub repository using Git client that isn't authenticated with my GitHub repository, then built a Docker image using the Dockerfile, launched a container, and verified that I can successfully access Spring PetClinic over "http://localhost:8080"
 
-    2. Pulled the Spring PetClinic Docker Image from Docker Hub using a Docker client that isn't authenticated with my Docker Hub account, launched a conatiner, and verified that I can successfully access Spring PetClinic over "http://localhost:<port>"
+    2. Pulled the Spring PetClinic Docker Image from Docker Hub using a Docker client that isn't authenticated with my Docker Hub account, launched a conatiner, and verified that I can successfully access Spring PetClinic over "http://localhost:8080"
 
 3. Verified that I can access the GitHub repository using web browser, when I'm signed-out
 
