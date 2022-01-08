@@ -38,7 +38,7 @@ As I understand, this command builds Maven project without having Maven installe
 
 ### Spring PetClinic Docker Image
 
-1. Created Dockerfile, tried making it as smallest image as possible. Ended up with the following:
+1. Created Dockerfile, tried making as small image as possible. Ended up with the following:
 
 ```bash
 FROM alpine
