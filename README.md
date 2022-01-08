@@ -32,7 +32,7 @@ As I understand, this command builds Maven project without having Maven installe
 
 1. Used ```mvn compile``` to compile the source code
 2. Used ```mvn test``` to compile and run the tests
-3. Used ```mvn package``` to create the Jar
+3. Used ```mvn package``` to create the JAR
 4. Found that if I want to force resolving dependencies, I need to use ```mvn dependency:resolve``` first, then run the above
 5. Started Spring PetClinic using ```java -jar target/*.jar```, and sucessfully accessed it on http://localhost:8080
 
