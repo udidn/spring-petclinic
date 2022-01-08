@@ -54,7 +54,7 @@ EOF'''
                         dockerImage.push()
                     }
                 }
-                
+
                 //Push Docker image TAR to JFrog Artifactory Generic Repository
                 rtUpload (
                     serverId: 'udid_artifactory',
@@ -67,6 +67,34 @@ EOF'''
                          ]
                     }'''
                 )
+                
+                rtMavenResolver (
+                    id: 'resolver-unique-id',
+                    serverId: 'udid_artifactory',
+                    releaseRepo: 'udid_maven',
+                    snapshotRepo: 'udid_maven'
+                )
+
+                rtMavenDeployer (
+                    id: 'deployer-unique-id',
+                    serverId: 'udid_artifactory',
+                    releaseRepo: 'udid_maven',
+                    snapshotRepo: 'udid_maven',
+                )
+
+                rtMavenRun (
+                    // Tool name from Jenkins configuration.
+                    tool: udid_maven,
+                    // Set to true if you'd like the build to use the Maven Wrapper.
+                    useWrapper: true,
+                    pom: '$WORKSPACE/spring-petclinic/pom.xml',
+                    goals: 'clean install',
+                    // Maven options.
+                    opts: '-Xms1024m -Xmx4096m',
+                    resolverId: 'resolver-unique-id',
+                    deployerId: 'deployer-unique-id',
+                )
+
             }
         }
     }
