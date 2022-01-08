@@ -50,7 +50,7 @@ If I use OpenJDK as base image, it becomes larger, that's why I use Alpine, and 
 
 2. Created container from the container image, and verified that I can access Spring PetClinic over http:/localhost:8080
 
-3. Created TAR file to be used as runnable image using ```docker save```, verified that I can load the image using ```docker load```, created container from it, and verified that I can access Spring PetClinic over http:/localhost:8080 
+3. Created TAR file to be used as runnable image using ```docker save```, verified that I can load the image using ```docker load```, created container from it, and verified that I can access Spring PetClinic over http:/localhost:8080
 
 ### Jenkins Pipeline Script
 
@@ -81,7 +81,7 @@ RUN jenkins-plugin-cli --plugins "blueocean:1.25.2 docker-workflow:1.26"
     2. Stage "Build", including: resolving Maven dependencies and compiling
     3. Stage "Test", to compile and run the tests
     4. Stage "Package", including: packaging the compiled code to JAR file using Maven, building Docker image, and saving the Docker image as TAR file
-    5. Stage "Push", including: pushing the Docker image to Docker Hub, and pushing the Docker image TAR file to JFrog Artiactory Generic Repository
+    5. Stage "Push", including: pushing the Docker image to Docker Hub, pushing the Docker image TAR file to JFrog Artiactory Generic Repository, and deploying to JFrog Artifactory Maven repository
 
 Notes:
 
@@ -104,6 +104,11 @@ I only had to install the Artifactory Jenkins plugin and configure it.
 
 5. Throughout writing the declarative pipeline, at some point, I pushed the Jenkinsfile to GitHub, switched the "Definition" from "Pipline script" to "Pipeline script from SCM", and verified I can run a build.
 When I had to modify the Jenkinsfile, I switched the "Definition" back to "Pipeline script", rewrote, test running a build, then updated the GitHub repository and swiched back the "Definition" to "Pipeline script from SCM".
+
+6. As part of step 5 above, when I first experimented with the Maven part of the Jenkins Artifactory pipeline plugin, I used both "rtMavenResolver" and "rtMavenDeployer", and referenced them in "rtMavenRun".
+The build failed, and as part of observing the console logs, I saw that Maven tries resolving the dependencies in pom.xml, from JFrog Artifactory.
+That's when I realized that "rtMavenResolver" is used to instruct Maven to resolve all dependencies in pom.xml, from JFrog Artifactory, and since they're not there, it fails.
+I removed "rtMavenResolver" (and its reference in "rtMavenRun"), and the build succeeded.
 
 ### Final Steps
 

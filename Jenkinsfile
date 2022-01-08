@@ -1,6 +1,10 @@
 pipeline {
     agent any
+    tools { 
+        maven 'udid_maven'
+    }
     stages {
+
         stage ('Clone') {
             steps {
                 sh 'git clone https://github.com/spring-projects/spring-petclinic.git'
@@ -55,7 +59,7 @@ EOF'''
                     }
                 }
 
-                //Push Docker image TAR to JFrog Artifactory Generic Repository
+                //Push Docker image TAR to JFrog Artifactory Generic repository
                 rtUpload (
                     serverId: 'udid_artifactory',
                     spec: '''{
@@ -67,32 +71,21 @@ EOF'''
                          ]
                     }'''
                 )
-                
-                rtMavenResolver (
-                    id: 'resolver-unique-id',
-                    serverId: 'udid_artifactory',
-                    releaseRepo: 'udid_maven',
-                    snapshotRepo: 'udid_maven'
-                )
 
+                //Define Maven Deployer and push artifacts to JFrog Artifactory Maven repository
                 rtMavenDeployer (
                     id: 'deployer-unique-id',
                     serverId: 'udid_artifactory',
                     releaseRepo: 'udid_maven',
                     snapshotRepo: 'udid_maven',
+                    properties: ['Owner=Udi Dahan', 'Project=Spring PetClinic']
                 )
 
                 rtMavenRun (
-                    // Tool name from Jenkins configuration.
-                    tool: udid_maven,
-                    // Set to true if you'd like the build to use the Maven Wrapper.
-                    useWrapper: true,
                     pom: '$WORKSPACE/spring-petclinic/pom.xml',
                     goals: 'clean install',
-                    // Maven options.
                     opts: '-Xms1024m -Xmx4096m',
-                    resolverId: 'resolver-unique-id',
-                    deployerId: 'deployer-unique-id',
+                    deployerId: 'deployer-unique-id'
                 )
 
             }
