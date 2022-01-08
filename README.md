@@ -81,46 +81,41 @@ RUN jenkins-plugin-cli --plugins "blueocean:1.25.2 docker-workflow:1.26"
     2. Stage "Build", including: resolving Maven dependencies and compiling
     3. Stage "Test", to compile and run the tests
     4. Stage "Package", including: packaging the compiled code to JAR file using Maven, building Docker image, and saving the Docker image as TAR file
-    5. Stage "Push", including: pushing the JAR file to GitHub, pushing the Docker image to Docker Hub, and pushing the Docker image TAR file to JFrog Artiactory Generic Repository
+    5. Stage "Push", including: pushing the Docker image to Docker Hub, and pushing the Docker image TAR file to JFrog Artiactory Generic Repository
 
 Notes:
 
 1. As part of step 4 above, I ran into an issue using Docker (to build the Docker image) inside the Jenkins Docker container (issue accessing Docker API).
 Eventually, I decided to remove the Jenkins container and install Jenkins locally on my WSL2 Ubuntu 20.04.
 
-2. I had JFrog Artifactory already installed on my WSL2 Ubuntu 20.04, as part of self-learning from few weeks ago.
+2. Also as part of step 4 above, I wanted to try and push the JAR to the GitHub repository.
+I understand that it's not a text file and therefore, can't be version-controlled, but I wanted to provide additional way for the users to pull run the project (by cloning the repository, building Docker image from the Dockerfile - which includes copying the JAR - and launching a container).
+I ran into multiple issues, among them:
+
+    1. I couldn't push the JAR because the remote contained content that I don't have locally
+    2. I then realized I need to pull, which solved the issue
+    3. However, I then ran into another, when I tried pushing the JAR file once again to the repository, the pull operation failed
+
+
+3. I had JFrog Artifactory already installed on my WSL2 Ubuntu 20.04, as part of self-learning from few weeks ago.
 I only had to install the Artifactory Jenkins plugin and configure it.
 
-3. At this point, since Jenkins was installed locally and listening on port 8080, everytime I had to verify that the Spring PetClinic application, I exposed it on a port different than 8080 (when launching the conatiner)
+4. At this point, since Jenkins was installed locally and listening on port 8080, everytime I had to verify that the Spring PetClinic application, I exposed it on a port different than 8080 (when launching the conatiner)
 
-4. Throughout writing the declarative pipeline, at some point, I pushed the Jenkinsfile to GitHub, switched the "Definition" from "Pipline script" to "Pipeline script from SCM", and verified I can run a build.
+5. Throughout writing the declarative pipeline, at some point, I pushed the Jenkinsfile to GitHub, switched the "Definition" from "Pipline script" to "Pipeline script from SCM", and verified I can run a build.
 When I had to modify the Jenkinsfile, I switched the "Definition" back to "Pipeline script", rewrote, test running a build, then updated the GitHub repository and swiched back the "Definition" to "Pipeline script from SCM".
 
 ### Final Steps
 
 1. Pushed the Spring PetClinic Dockerfile to GitHub
-2. Verified that I can run the project in the following as if I was a user, in the following 2 ways:
-
-    1. Cloned the GitHub repository using Git client that isn't authenticated with my GitHub repository, then built a Docker image using the Dockerfile, launched a container, and verified that I can successfully access Spring PetClinic over "http://localhost:8080"
-
-    2. Pulled the Spring PetClinic Docker Image from Docker Hub using a Docker client that isn't authenticated with my Docker Hub account, launched a conatiner, and verified that I can successfully access Spring PetClinic over "http://localhost:8080"
+2. Verified that I can run the project in the following as if I was a user:
+I pulled the Spring PetClinic Docker Image from Docker Hub using a Docker client that isn't authenticated with my Docker Hub account, launched a conatiner, and verified that I can successfully access Spring PetClinic over "http://localhost:8080"
 
 3. Verified that I can access the GitHub repository using web browser, when I'm signed-out
 
 4. Wrote this Readme file and pushed it to GitHub
 
 ## How to Run the Project
-
-### Clone from GitHub
-
-```bash
-git clone https://github.com/udidn/spring-petclinic.git
-cd spring-petclinic
-docker build -t spring-petclinic .
-docker run --name spring-petclinic -d -p 8080:8080 spring-petclinic
-```
-
-After a few seconds, you should be able to access Spring PetClinic over "http://localhost:8080".
 
 ### Pull from Docker Hub
 

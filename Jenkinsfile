@@ -10,7 +10,7 @@ pipeline {
         stage ('Build') {
             steps {
                 dir("$WORKSPACE/spring-petclinic") {
-                    //sh 'mvn dependency:resolve' // Resolve dependencies
+                    sh 'mvn dependency:resolve'
                     sh 'mvn compile'
                 }
             }
@@ -27,6 +27,8 @@ pipeline {
         stage ('Package') {
             steps {
                 dir("$WORKSPACE/spring-petclinic") {
+
+                    // Package, build Docker image and save it to TAR file
                     sh 'mvn package'
                     sh '''cat > Dockerfile << EOF
 FROM alpine
@@ -42,28 +44,17 @@ EOF'''
             }
         }
 
-        stage ('Deploy') {
+        stage ('Push') {
             steps {
-                sh 'mkdir $WORKSPACE/jar'
-                sh 'cd $WORKSPACE/jar'
-                sh 'cp $WORKSPACE/spring-petclinic/target/spring-petclinic-2.6.0-SNAPSHOT.jar $WORKSPACE/jar'
-                withCredentials([gitUsernamePassword(credentialsId: 'udidn_git', gitToolName: 'Default')]) {
-                    sh 'git config --global user.name "udidn"'
-                    sh 'git config --global user.email dahanehud@gmail.com'
-                    sh 'git init'
-                    sh 'git remote add origin https://github.com/udidn/spring-petclinic.git'
-                    sh 'git pull origin main'
-                    sh 'git add -f $WORKSPACE/jar/spring-petclinic-2.6.0-SNAPSHOT.jar'
-                    sh 'git commit -m \"Added Jar file\"'
-                    sh 'git branch -M main'
-                    sh 'git push -u origin main'
-                }
+
+                // Push Docker image to Docker Hub
                 script {
                     docker.withRegistry('https://registry-1.docker.io/v2/', 'udid_docker_hub') {
                         dockerImage.push()
                     }
                 }
                 
+                //Push Docker image TAR to JFrog Artifactory Generic Repository
                 rtUpload (
                     serverId: 'udid_artifactory',
                     spec: '''{
@@ -78,6 +69,7 @@ EOF'''
             }
         }
     }
+
     post {
         always {
             cleanWs()
