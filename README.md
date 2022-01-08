@@ -81,7 +81,7 @@ RUN jenkins-plugin-cli --plugins "blueocean:1.25.2 docker-workflow:1.26"
     2. Stage "Build", including: resolving Maven dependencies and compiling
     3. Stage "Test", to compile and run the tests
     4. Stage "Package", including: packaging the compiled code to JAR file using Maven, building Docker image, and saving the Docker image as TAR file
-    5. Stage "Push", including: pushing the Docker image to Docker Hub, pushing the Docker image TAR file to JFrog Artiactory Generic Repository, and deploying to JFrog Artifactory Maven repository
+    5. Stage "Push", including: pushing the Docker image to Docker Hub, pushing the Docker image TAR file to JFrog Artiactory Generic repository, and deploying to JFrog Artifactory Maven repository
 
 Notes:
 
