@@ -1,4 +1,4 @@
-# Spring PetClinic JFrog Exercise
+# Spring PetClinic Exercise
 
 Sprint PetClinic is a sample Spring application buit using Maven.
 
