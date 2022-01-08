@@ -13,7 +13,7 @@ Instructions on different way to run the project.
 
 ### Getting Started
 
-1. Since didn't work with Git before, I walked-thtough the following short getting started (including installing git, and GitHub account creation)
+1. Since I didn't work with Git before, I walked-thtough the following short getting started (including installing git, and GitHub account creation)
 
 2. I read basics about Maven
 
