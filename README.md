@@ -46,7 +46,7 @@ RUN apk --no-cache add openjdk11
 COPY target/spring-petclinic-2.6.0-SNAPSHOT.jar /app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 ```
-If I use OpenJDK as base image, it becomes larger, that's why I use Alpine, and then install openjdk11.
+When I used OpenJDK as base image, the image became larger, that's why I used Alpine, and then installed openjdk11.
 
 2. Created container from the container image, and verified that I can access Spring PetClinic over http:/localhost:8080
 
