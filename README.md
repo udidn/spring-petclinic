@@ -22,7 +22,7 @@ Instructions on different way to run the project.
 1. Cloned the Spring PetClinic repository to my local WSL2 Ubuntu 20.04:
 git clone https://github.com/spring-projects/spring-petclinic.git
 
-2. Compiled it using ```./mvnw package```
+2. Compiled and packaged it using ```./mvnw package```
 
 As I understand, this command builds Maven project witout having Maven installed.
 
