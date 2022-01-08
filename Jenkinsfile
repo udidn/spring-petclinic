@@ -11,6 +11,7 @@ pipeline {
             steps {
                 dir("$WORKSPACE/spring-petclinic") {
                     sh 'mvn dependency:resolve'
+                    sh 'mvn dependency:resolve-plugins'
                     sh 'mvn compile'
                 }
             }
