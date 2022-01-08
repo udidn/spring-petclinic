@@ -105,7 +105,9 @@ When I had to modify the Jenkinsfile, I switched the "Definition" back to "Pipel
 
     2. Pulled the Spring PetClinic Docker Image from Docker Hub using a Docker client that isn't authenticated with my Docker Hub account, launched a conatiner, and verified that I can successfully access Spring PetClinic over "http://localhost:<port>"
 
-3. Wrote this Readme file and pushed it to GitHub
+3. Verified that I can access the GitHub repository using web browser, when I'm signed-out
+
+4. Wrote this Readme file and pushed it to GitHub
 
 ## How to Run the Project
 
