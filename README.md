@@ -50,7 +50,7 @@ When I used OpenJDK as base image, the image became larger, that's why I used Al
 
 2. Created container from the container image, and verified that I can access Spring PetClinic over http:/localhost:8080
 
-3. Created TAR file to be used as runnable image using ```docker save```, verified that I can load the image using ```docker load```, created container from it, and verified that I can access Spring PetClinic over http:/localhost:8080
+3. Created TAR file to be used as runnable image using ```docker save```, verified that I can load the image using ```docker load```, created container from it, and verified that I can access Spring PetClinic over http://localhost:8080
 
 ### Jenkins Pipeline Script
 
