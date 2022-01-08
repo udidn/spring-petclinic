@@ -24,7 +24,7 @@ git clone https://github.com/spring-projects/spring-petclinic.git
 
 2. Compiled and packaged it using ```./mvnw package```
 
-As I understand, this command builds Maven project witout having Maven installed.
+As I understand, this command builds Maven project without having Maven installed.
 
 3. Started Spring PetClinic using ```java -jar target/*.jar```, and sucessfully accessed it on http://localhost:8080
 
